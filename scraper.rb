@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 require 'wikidata/fetcher'
-require 'pry'
 
 names = EveryPolitician::Wikidata.wikipedia_xpath( 
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_de_Portugal',
@@ -10,7 +9,8 @@ names = EveryPolitician::Wikidata.wikipedia_xpath(
   xpath: '//table//td[1]//a[not(@class="new")]/@title',
 ) 
 
-EveryPolitician::Wikidata.scrape_wikidata(names: { pt: names })
-warn EveryPolitician::Wikidata.notify_rebuilder
+by_category = WikiData::Category.new( 'Categoria:Deputados da Assembleia da República Portuguesa', 'pt').member_titles
+  
+EveryPolitician::Wikidata.scrape_wikidata(names: { pt: names | by_category })
 
 
