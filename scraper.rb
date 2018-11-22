@@ -15,7 +15,8 @@ by_category_de = WikiData::Category.new( 'Kategorie:Mitglied der Assembleia da R
 # Find all P39s of the Legislature
 query = <<EOS
   SELECT DISTINCT ?item WHERE {
-    ?item p:P39 [ ps:P39 wd:Q19953703 ] .
+    VALUES ?position { wd:Q19953703 wd:Q43185266 }
+    ?item p:P39/ps:P39 ?position .
   }
 EOS
 p39s = EveryPolitician::Wikidata.sparql(query)
