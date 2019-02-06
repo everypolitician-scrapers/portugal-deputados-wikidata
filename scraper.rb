@@ -21,6 +21,8 @@ query = <<EOS
 EOS
 p39s = EveryPolitician::Wikidata.sparql(query)
 
-EveryPolitician::Wikidata.scrape_wikidata(ids: p39s, names: { pt: names | by_category_pt, de: by_category_de })
+# anyone with a Portuguese parliament ID
+idquery = 'SELECT DISTINCT ?item WHERE { ?item wdt:P6199 [] }'
+ppids = EveryPolitician::Wikidata.sparql(idquery)
 
-
+EveryPolitician::Wikidata.scrape_wikidata(ids: p39s | ppids, names: { pt: names | by_category_pt, de: by_category_de })
